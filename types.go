@@ -6,42 +6,42 @@ import (
 	"time"
 )
 
-type Duration time.Duration
+type StringDuration time.Duration
 
-func (d *Duration) UnmarshalJSON(b []byte) error {
-	var s string
-	err := json.Unmarshal(b, &s)
+func (s *StringDuration) UnmarshalJSON(b []byte) error {
+	var v string
+	err := json.Unmarshal(b, &v)
 	if err != nil {
 		return err
 	}
-	parsed, err := time.ParseDuration(s)
+	parsed, err := time.ParseDuration(v)
 	if err != nil {
 		return err
 	}
-	*d = Duration(parsed)
+	*s = StringDuration(parsed)
 	return nil
 }
 
-func (d *Duration) Value() time.Duration {
+func (d *StringDuration) Value() time.Duration {
 	return time.Duration(*d)
 }
 
-type EtcdInt int
+type StringInt int
 
-func (i *EtcdInt) UnmarshalJSON(b []byte) error {
-	var s string
-	err := json.Unmarshal(b, &s)
+func (s *StringInt) UnmarshalJSON(b []byte) error {
+	var v string
+	err := json.Unmarshal(b, &v)
 	if err != nil {
 		return err
 	}
-	value, err := strconv.Atoi(s)
+	value, err := strconv.Atoi(v)
 	if err != nil {
 		return err
 	}
-	*i = EtcdInt(value)
+	*s = StringInt(value)
 	return nil
 }
 
-func (i *EtcdInt) Value() int {
-	return int(*i)
+func (s *StringInt) Value() int {
+	return int(*s)
 }
