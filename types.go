@@ -20,3 +20,7 @@ func (d *Duration) UnmarshalJSON(b []byte) error {
 	*d = Duration(parsed)
 	return nil
 }
+
+func (d *Duration) Value() time.Duration {
+	return time.Duration(*d)
+}
