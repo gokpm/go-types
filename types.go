@@ -47,6 +47,26 @@ func (s *StringInt) Value() int {
 	return int(*s)
 }
 
+type StringFloat64 int
+
+func (s *StringFloat64) UnmarshalJSON(b []byte) error {
+	var v string
+	err := json.Unmarshal(b, &v)
+	if err != nil {
+		return err
+	}
+	value, err := strconv.ParseFloat(v, 64)
+	if err != nil {
+		return err
+	}
+	*s = StringFloat64(value)
+	return nil
+}
+
+func (s *StringFloat64) Value() float64 {
+	return float64(*s)
+}
+
 type StringBinaryByteSize float64
 
 func (s *StringBinaryByteSize) UnmarshalJSON(b []byte) error {
