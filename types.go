@@ -177,6 +177,7 @@ func (s *StringArray) UnmarshalJSON(b []byte) error {
 	*s = []string{}
 	for _, part := range parts {
 		part = strings.TrimSpace(part)
+		part = strings.Trim(part, "\"")
 		*s = append(*s, part)
 	}
 	return nil
