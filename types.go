@@ -163,3 +163,25 @@ func (s *StringBool) UnmarshalJSON(b []byte) error {
 func (s *StringBool) Value() bool {
 	return bool(*s)
 }
+
+type StringArray []string
+
+func (s *StringArray) UnmarshalJSON(b []byte) error {
+	var v string
+	err := json.Unmarshal(b, &v)
+	if err != nil {
+		return err
+	}
+	v = strings.Trim(v, "[]")
+	parts := strings.Split(v, ",")
+	*s = []string{}
+	for _, part := range parts {
+		part = strings.TrimSpace(part)
+		*s = append(*s, part)
+	}
+	return nil
+}
+
+func (s *StringArray) Value() []string {
+	return *s
+}
