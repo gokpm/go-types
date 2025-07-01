@@ -39,8 +39,14 @@ JSON input:
 }
 ```
 
-Access values using the `Value()` method:
+Unmarshal and access values:
 ```go
+var config Config
+err := json.Unmarshal(jsonData, &config)
+if err != nil {
+    log.Fatal(err)
+}
+
 duration := config.Timeout.Value()  // time.Duration
 port := config.Port.Value()         // int
 ```
@@ -54,7 +60,3 @@ port := config.Port.Value()         // int
 - `StringDecimalSize` - Parses decimal sizes (1K = 1000 units)
 - `StringBool` - Parses boolean strings
 - `StringArray` - Parses comma-separated string arrays
-
-## License
-
-MIT
